@@ -1,0 +1,15 @@
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+maps/
+tmp
+dest/
+.DS_Store
+.idea
+e2e-tests
+dest/*
+webContent.log
+EV-Home-win32-ia32/
+npm-debug.log
+
