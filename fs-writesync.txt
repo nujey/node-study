@@ -1,1 +1,1 @@
-{"dev":16777220,"mode":33188,"nlink":1,"uid":501,"gid":20,"rdev":0,"blksize":4194304,"ino":8609920517,"size":19,"blocks":8,"atimeMs":1555394966034.789,"mtimeMs":1555400106298.8252,"ctimeMs":1555400106298.8252,"birthtimeMs":1555394802523.6262,"atime":"2019-04-16T06:09:26.035Z","mtime":"2019-04-16T07:35:06.299Z","ctime":"2019-04-16T07:35:06.299Z","birthtime":"2019-04-16T06:06:42.524Z"}
+{"isFile":true,"isDirectory":false,"size":19,"birthTime":"2019-04-16T06:06:42.524Z","modifiedTime":"2019-04-17T06:05:58.215Z"}

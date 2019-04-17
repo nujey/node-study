@@ -47,7 +47,17 @@ fs.writeFileSync('fs-writesync.txt', writeData)
  * @param {Function} callback 回调函数 参数是err和status 【fa.status】
  */
 fs.stat('fs-writesync.txt', function(err, stats) {
-  console.log(stats)
-
-  fs.writeFileSync('fs-writesync.txt', JSON.stringify(stats))
+  // console.log(stats)
+  if (err) {
+    console.log(err)
+  } else {
+    var statsObj = {
+      isFile: stats.isFile(), // 是否是文件
+      isDirectory: stats.isDirectory(), // 是否是目录
+      size: stats.isFile() ? stats.size : '', // 文件大小
+      birthTime: stats.isFile() ? stats.birthtime : '', // 创建时间
+      modifiedTime: stats.isFile() ? stats.mtime : ''// 修改时间
+    }
+    fs.writeFileSync('fs-writesync.txt', JSON.stringify(statsObj))
+  }
 })
