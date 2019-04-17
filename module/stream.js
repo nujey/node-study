@@ -25,10 +25,16 @@ rs.on('error', function(err) {
   console.log(err)
 })
 
+/** pipe **/
+var rs1 = fs.createReadStream('fs-write.txt')
+var ws1 = fs.createWriteStream('output.txt')
+
+rs1.pipe(ws1, { end: false })
+
 var ws = fs.createWriteStream('output.txt', 'utf-8')
 ws.write('使用stream写入');
 var wsobj = { name: '测试一下对象的写入'}
 var arr = [1, 2, 3, 4]
 ws.write(JSON.stringify(wsobj))
 ws.write(arr.join('-'))
-ws.end()
+// ws.end()
