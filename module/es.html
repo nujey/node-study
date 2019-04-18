@@ -24,6 +24,17 @@
         var notification = new Notification('CC糟老头子')
       }
     }
+    function notifyMe(title) {
+      if (Notification.permission === "granted")
+        new Notification(title);
+      else if (Notification.permission !== 'denied')
+        Notification.requestPermission(permission => {
+          if (permission === "granted")
+            new Notification(title);
+        });
+    }
+
+    notifyMe(999)
     var notification2 = new Notification('CC糟老头子', {
       dir: 'rtl',
       lang: '',
