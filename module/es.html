@@ -7,6 +7,30 @@
   <title>Document</title>
 </head>
 <body>
-  <script src="./greet.js"></script>
+  <div>
+    <button onclick="notify()">点我一下试试</button>
+  </div>
+  <!-- <script src="./greet.js"></script> -->
+  <script>
+    // var notification = new Notification('CC糟老头子')
+    function notify () {
+      if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function(permission) {
+          console.log(permission)
+          if (permission !== 'granted') {
+            return
+          }
+        })
+        var notification = new Notification('CC糟老头子')
+      }
+    }
+    var notification2 = new Notification('CC糟老头子', {
+      dir: 'rtl',
+      lang: '',
+      body: '就是一个body',
+      tag: 1,
+      icon: 'https://cn.vuejs.org/images/logo.png'
+    })
+  </script>
 </body>
 </html>
