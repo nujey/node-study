@@ -8,21 +8,15 @@
 </head>
 <body>
   <div>
+    <input type="email" value="1" id="email">
     <button onclick="notify()">点我一下试试</button>
   </div>
   <!-- <script src="./greet.js"></script> -->
   <script>
     // var notification = new Notification('CC糟老头子')
     function notify () {
-      if (Notification.permission !== 'denied') {
-        Notification.requestPermission(function(permission) {
-          console.log(permission)
-          if (permission !== 'granted') {
-            return
-          }
-        })
-        var notification = new Notification('CC糟老头子')
-      }
+      var Email = document.getElementById('email').value
+      console.log(Email)
     }
     function notifyMe(title) {
       if (Notification.permission === "granted")
