@@ -5,5 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
+  },
+  "dependencies": {
+    "koa-route": "3.2.0"
   }
 }

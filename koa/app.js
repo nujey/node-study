@@ -1,6 +1,7 @@
 'use strict'
 
 const Koa = require('koa')
+const router = require('koa-router')()
 
 const app = new Koa()
 
@@ -16,6 +17,14 @@ app.use(async (ctx, next) => {
   console.log(`Time: ${ms}ms`)
 })
 
+app.use(async (ctx, next) => {
+  console.log(ctx.path === ctx.url)
+  if (ctx.request.path.includes('index')) {
+    ctx.response.body = 'index page'
+  } else {
+    await next()
+  }
+})
 app.use(async (ctx, next) => {
   await next()
   // console.log(ctx)
