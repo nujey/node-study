@@ -2,11 +2,13 @@
   "name": "koa-study",
   "version": "1.0.0",
   "description": "ella koa",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
+    "server": "node server.js",
     "start": "node app.js"
   },
   "dependencies": {
-    "koa-route": "3.2.0"
+    "koa-router": "7.4.0",
+    "koa": "2.7.0"
   }
 }
