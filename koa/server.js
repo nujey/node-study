@@ -1,14 +1,20 @@
 'use strict'
 const Koa = require('koa')
+const path = require('path')
 const router = require('koa-router')()
 const bodyParser = require('koa-bodyparser')
+const resourse = require('koa-static')
 
 const app = new Koa()
+const staticPath = './static'
 
-router.get('', async (ctx) => {
-  var name = ctx.params.name
-  ctx.response.body = `<h1>Hello, ${name}</h1>`
-})
+app.use(bodyParser())
+
+console.log(path.join(__dirname, staticPath))
+
+app.use(resourse(
+  path.join(__dirname, staticPath)
+))
 
 router.get('/', async (ctx) => {
   ctx.body = `<form action="/signin" method="post">
@@ -19,10 +25,14 @@ router.get('/', async (ctx) => {
 })
 
 router.post('/signin', async (ctx, next) => {
-  console.log(ctx.body)
-  let name = ctx.body.name || '',
-      password = ctx.body.pass || ''
+  let name = ctx.request.body.name || '',
+      password = ctx.request.body.pass || ''
+      ctx.body = {
+        name: name,
+        password: password
+      }
 })
+
 router.get('/index', async (ctx, next) => {
   let url = ctx.url
   console.log(ctx.request.query, ctx.query)
@@ -39,13 +49,13 @@ router.get('/index', async (ctx, next) => {
     ctx_querystring
   }
 })
+
 // app.use(async (ctx, ) => {
 //   let url = ctx.url
 //   ctx.body = url
 // })
 
 // koa-bodyparser 必须在router之前被注册到app对象上
-app.use(bodyParser())
 app.use(router.routes())
 
 app.listen(3333)
