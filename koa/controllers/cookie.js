@@ -1,6 +1,8 @@
 'use strict'
 
 const Koa = require('koa')
+const session = require('koa-session-minimal')
+const MysqlSession = require('koa-mysql-session')
 
 const app = new Koa()
 
@@ -21,6 +23,39 @@ app.use(async (ctx) => {
     ctx.body = 'cookie is ok'
   } else {
     ctx.body = 'hello world'
+  }
+})
+
+// 配置存储session的信息的mysql
+let store = new MysqlSession({
+  user: 'root',
+  password: 'abc123',
+  database: 'koa_demo',
+  host: '127.0.0.1'
+})
+
+// 存放sessionId的cookie的配置
+let cookie = {
+  maxAge: ''
+}
+
+// 使用session中间件
+app.use(session({
+  key: 'SESSION_ID',
+  store: store,
+  cookie: cookie
+}))
+
+app.use(async (ctx) => {
+  if (ctx.url === '/set') {
+    ctx.session = {
+      user_id: Math.random().toString(36).substr(2),
+      count: 0
+    }
+    ctx.body = ctx.session
+  } else {
+    ctx.session.count = ctx.session.count + 1
+    ctx.body = ctx.session
   }
 })
 
