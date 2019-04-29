@@ -1,64 +1,85 @@
 'use strict'
 
 const Koa = require('koa')
+const router = require('koa-router')()
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
+const { query } = require('./async-db')
 
 const app = new Koa()
 
-app.use(async (ctx) => {
-  if (ctx.url === '/index') {
-    ctx.cookies.set(
-      'cid',
-      'Hola!',
-      {
-        domain: 'localhost', // 写cookie所在的域名
-        path: '/index', // 写cookie锁在的所在的路径
-         maxAge: 10 * 60 * 1000, // cookie有效时长
-         expires: new Date('2020-01-01'), // cookie失效时间
-         httpOnly: false, // 是否只用于http请求中获取
-         overwrite: false // 是否允许重写
-      }
-    )
-    ctx.body = 'cookie is ok'
-  } else {
-    ctx.body = 'hello world'
-  }
-})
-
-// 配置存储session的信息的mysql
-let store = new MysqlSession({
-  user: 'root',
-  password: 'abc123',
-  database: 'koa_demo',
-  host: '127.0.0.1'
-})
-
-// 存放sessionId的cookie的配置
-let cookie = {
-  maxAge: ''
+async function selectAllData(tableName) {
+  let sql = `SELECT * FROM ${tableName}`
+  // console.log(sql)
+  let dataList = await query(sql)
+  return dataList
 }
 
-// 使用session中间件
-app.use(session({
-  key: 'SESSION_ID',
-  store: store,
-  cookie: cookie
-}))
-
-app.use(async (ctx) => {
-  if (ctx.url === '/set') {
-    ctx.session = {
-      user_id: Math.random().toString(36).substr(2),
-      count: 0
+// cookie 操作
+router.get('/index', async (ctx) => {
+  ctx.cookies.set(
+    'cid',
+    'Hola!',
+    {
+      domain: 'localhost', // 写cookie所在的域名
+      path: '/index', // 写cookie锁在的所在的路径
+        maxAge: 10 * 60 * 1000, // cookie有效时长
+        expires: new Date('2020-01-01'), // cookie失效时间
+        httpOnly: false, // 是否只用于http请求中获取
+        overwrite: false // 是否允许重写
     }
-    ctx.body = ctx.session
+  )
+  ctx.body = 'cookie is ok'
+})
+
+// 数据库获取到的数据直接渲染到页面上
+router.get('/mysql', async (ctx) => {
+  const tableName = ctx.request.query.name ? ctx.request.query.name : ''
+  if (tableName === '') {
+    throw ('表不存在啊')
   } else {
-    ctx.session.count = ctx.session.count + 1
-    ctx.body = ctx.session
+    ctx.body = await selectAllData(tableName)
   }
 })
+
+app.use(router.routes())
 
 app.listen(3000, () => {
   console.log('cookie server')
 })
+// 配置存储session的信息的mysql
+// let store = new MysqlSession({
+//   user: 'root',
+//   password: 'abc123',
+//   database: 'koa_demo',
+//   host: '127.0.0.1'
+// })
+
+// // 存放sessionId的cookie的配置
+// let cookie = {
+//   maxAge: ''
+// }
+
+// // 使用session中间件
+// app.use(session({
+//   key: 'SESSION_ID',
+//   store: store,
+//   cookie: cookie
+// }))
+
+// app.use(async (ctx) => {
+//   if (ctx.url === '/set') {
+//     ctx.session = {
+//       user_id: Math.random().toString(36).substr(2),
+//       count: 0
+//     }
+//     ctx.body = ctx.session
+//   } else {
+//     ctx.session.count = ctx.session.count + 1
+//     ctx.body = ctx.session
+//   }
+// })
+
+// app.listen(3000, () => {
+//   console.log('cookie server')
+// })
