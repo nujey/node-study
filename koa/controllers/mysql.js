@@ -25,7 +25,6 @@ const pool = mysql.createPool({
 // 在数据池中进行会话操作
 pool.getConnection(function(err, connection) {
   connection.query('SELECT * FROM sunday', (error, results, fields) => {
-    console.log(results.length)
     connection.release()
     if (err) throw err
   })
