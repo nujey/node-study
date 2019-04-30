@@ -1,15 +1,26 @@
 'use strict'
 
 const Koa = require('koa')
+const path = require('path')
 const router = require('koa-router')()
+const staticModule = require('koa-static')
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
-const { query } = require('./async-db')
+const { query } = require('../db/async-db')
+
+const TABLENAME = 'sunday'
+
+
 
 const app = new Koa()
+const staticPath = '../static'
 
-async function selectAllData(tableName) {
-  let sql = `SELECT * FROM ${tableName}`
+app.use(staticModule(
+  path.join(__dirname, staticPath)
+))
+
+async function selectAllData(sql) {
+  // let sql = `SELECT * FROM ${tableName}`
   // console.log(sql)
   let dataList = await query(sql)
   return dataList
@@ -35,11 +46,32 @@ router.get('/index', async (ctx) => {
 // 数据库获取到的数据直接渲染到页面上
 router.get('/mysql', async (ctx) => {
   const tableName = ctx.request.query.name ? ctx.request.query.name : ''
+  const id = ctx.query.id
   if (tableName === '') {
     throw ('表不存在啊')
   } else {
-    ctx.body = await selectAllData(tableName)
+    let sql = `SELECT * from ${tableName} WHERE id = ${id}`
+    await selectAllData(sql).then(res => {
+      console.log(res)
+      ctx.body = `${res[0].id} : ${res[0].name}`
+    })
   }
+})
+
+// 前后分离的接口
+router.get('/getData', async (ctx) => {
+  let sql = ctx.request.query.id ? `SELECT * FROM ${TABLENAME} WHERE id = ${ctx.request.query.id}` : 
+                                   `SELECT * FROM ${TABLENAME}`
+  await selectAllData(sql).then(res => {
+    ctx.body = {
+      status: true,
+      code: '200',
+      result: {
+        id: ctx.request.query.id,
+        list: res
+      }
+    }
+  })
 })
 
 app.use(router.routes())

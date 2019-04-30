@@ -5,9 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 </head>
 <body>
-  <img src="./image/test.png" alt="">
-  <a href="./home.html">首页</a>
+  <div id="app">
+    <img src="./image/test.png" alt="">
+    <div class="test">
+      <input type="text" v-model="id">
+      <p v-for="(item, index) in list" :key="item.id">{{item.id}}~{{item.name}}</p>
+      <p class="test-btn" @click="handleGetList">发送请求</p>
+    </div>
+  </div>
+  <script>
+    ;new Vue({
+      el: '#app',
+      data() {
+        return {
+          id: '',
+          list: []
+        }
+      },
+      methods: {
+        handleGetList: function() {
+          const that = this
+          $.ajax({
+            url: '/getData',
+            type: 'get',
+            data: {
+              id: that.id
+            },
+            success: function(res) {
+              that.list = res.result.list
+            }
+          })
+        }
+      }
+    })
+  </script>
 </body>
 </html>
