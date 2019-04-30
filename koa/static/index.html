@@ -13,8 +13,16 @@
     <img src="./image/test.png" alt="">
     <div class="test">
       <input type="text" v-model="id">
-      <p v-for="(item, index) in list" :key="item.id">{{item.id}}~{{item.name}}</p>
+      <p v-for="(item, index) in list" :key="item.id">
+        {{item.id}}~{{item.name}}
+        <span style="margin-left: 20px;" @click="handleRemove(item.id)">删除</span>
+      </p>
       <p class="test-btn" @click="handleGetList">发送请求</p>
+      <div>
+        <input type="text" v-model="name" placeholder="请输入名称">
+        <input type="text" v-model="age" placeholder="请输入年龄">
+        <p class="test-btn" @click="handleAdd">增加数据</p>
+      </div>
     </div>
   </div>
   <script>
@@ -23,7 +31,9 @@
       data() {
         return {
           id: '',
-          list: []
+          list: [],
+          name: '',
+          age: ''
         }
       },
       methods: {
@@ -37,6 +47,33 @@
             },
             success: function(res) {
               that.list = res.result.list
+            }
+          })
+        },
+        handleAdd: function() {
+          const that = this
+          $.ajax({
+            url: '/addData',
+            type: 'post',
+            data: {
+              name: that.name,
+              age: that.age
+            },
+            success: function(res) {
+              that.handleGetList()
+            }
+          })
+        },
+        handleRemove: function(id) {
+          const that = this
+          $.ajax({
+            url: '/removeDate',
+            type: 'post',
+            data: {
+              id: id
+            },
+            success: function(res) {
+              that.handleGetList()
             }
           })
         }

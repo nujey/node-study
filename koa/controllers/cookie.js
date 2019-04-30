@@ -4,6 +4,7 @@ const Koa = require('koa')
 const path = require('path')
 const router = require('koa-router')()
 const staticModule = require('koa-static')
+const bodyParser = require('koa-bodyparser')
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
 const { query } = require('../db/async-db')
@@ -13,6 +14,8 @@ const TABLENAME = 'sunday'
 
 
 const app = new Koa()
+
+app.use(bodyParser())
 const staticPath = '../static'
 
 app.use(staticModule(
@@ -58,7 +61,7 @@ router.get('/mysql', async (ctx) => {
   }
 })
 
-// 前后分离的接口
+// 前后分离的接口 查询接口
 router.get('/getData', async (ctx) => {
   let sql = ctx.request.query.id ? `SELECT * FROM ${TABLENAME} WHERE id = ${ctx.request.query.id}` : 
                                    `SELECT * FROM ${TABLENAME}`
@@ -74,6 +77,51 @@ router.get('/getData', async (ctx) => {
   })
 })
 
+// 给数据库新增一条数据
+router.post('/addData', async (ctx) => {
+  if (!ctx.request.body.name) {
+    ctx.body = {
+      status: false,
+      code: '5001',
+      result: {},
+      message: '名称不能为空'
+    }
+    return false
+  } else {
+    const date = new Date().toJSON().slice(0, 10)
+    let sql = `INSERT INTO ${TABLENAME}(name, age, time) VALUES ('${ctx.request.body.name}', '12', '${date}')`
+    await selectAllData(sql).then(res => {
+      ctx.body = {
+        status: false,
+        code: '200',
+        result: {},
+        message: '添加成功'
+      }
+    })
+  }
+})
+// 删除一条数据
+router.post('/removeDate', async (ctx) => {
+  if (!ctx.request.body.id) {
+    ctx.body = {
+      status: false,
+      code: '5001',
+      result: {},
+      message: 'id不能为空'
+    }
+    return false
+  } else {
+    let sql = `DELETE FROM ${TABLENAME} WHERE id='${ctx.request.body.id}'`
+    await selectAllData(sql).then(res => {
+      ctx.body = {
+        status: false,
+        code: '200',
+        result: {},
+        message: '删除成功'
+      }
+    })
+  }
+})
 app.use(router.routes())
 
 app.listen(3000, () => {
