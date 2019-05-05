@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "server": "node server.js",
-    "start": "node app.js"
+    "start": "node http.js"
   },
   "dependencies": {
     "koa": "2.7.0",

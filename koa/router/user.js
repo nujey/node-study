@@ -1,14 +1,14 @@
 'use strict'
 
 const router = require('koa-router')();
-const db = require("../db")
+const { dbQuery } = require("../db")
 const TABLENAME = 'sunday'
 
 router.post('/oa/login', async (ctx, next) => {
   let { name, password} = ctx.request.body
   console.log(name, password)
   let sql = `SELECT name, age FROM ${TABLENAME} WHERE name=${name} AND is_delete=0;`
-  await db(sql).then(res => {
+  await dbQuery(sql).then(res => {
     ctx.body = {
       msg: '',
       code: 1000,
@@ -26,8 +26,9 @@ router.get('/name', async (ctx, next) => {
     }
     return false
   }
-  let sql = `SELECT * FROM ${TABLENAME} WHERE age=${ctx.request.query.id}`
-  await db(sql).then(res => {
+  let sql = `SELECT * FROM ${TABLENAME} WHERE id = ${ctx.request.query.id}`
+  await dbQuery(sql).then(res => {
+    console.log(res)
     ctx.body = {
       msg: '',
       code: 200,
@@ -35,3 +36,11 @@ router.get('/name', async (ctx, next) => {
     }
   })
 })
+
+module.exports = {
+  user: router
+}
+
+// module.exports = router
+
+// module.exports = { router }
