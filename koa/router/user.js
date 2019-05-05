@@ -26,8 +26,9 @@ router.get('/name', async (ctx, next) => {
     }
     return false
   }
-  let sql = `SELECT * FROM ${TABLENAME} WHERE id=${ctx.request.query.id}`
+  let sql = `SELECT * FROM ${TABLENAME} WHERE id = ${ctx.request.query.id}`
   await dbQuery(sql).then(res => {
+    console.log(res)
     ctx.body = {
       msg: '',
       code: 200,
@@ -36,10 +37,10 @@ router.get('/name', async (ctx, next) => {
   })
 })
 
-// module.exports = {
-//   user: router
-// }
+module.exports = {
+  user: router
+}
 
-module.exports = router
+// module.exports = router
 
 // module.exports = { router }
