@@ -5,7 +5,7 @@ const mysql = require('mysql')
 const pool = mysql.createPool({
   host: '127.0.0.1',
   user: 'root',
-  password: '123456',
+  password: 'xiaokan',
   port: '3306',
   database: 'nini',
   multipleStatements: true // 允许多条sql语句同时执行
@@ -30,6 +30,4 @@ let dbQuery = function(sql, values) {
   })
 }
 
-module.exports = {
-  dbQuery: dbQuery
-}
+module.exports = { dbQuery }
