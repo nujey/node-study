@@ -2,7 +2,7 @@
 
 const router = require('koa-router')();
 const { dbQuery } = require("../db")
-const TABLENAME = 'sunday'
+const TABLENAME = 'node'
 
 router.post('/oa/login', async (ctx, next) => {
   let { name, password} = ctx.request.body
