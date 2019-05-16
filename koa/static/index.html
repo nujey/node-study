@@ -81,10 +81,16 @@
           })
         },
         handleTest: function() {
-          this.list.forEach(element => {
-            element = element === 4  ? 'a' : element
-          })
+          // this.list.forEach(element => {
+          //   element = element === 4  ? 'a' : element
+          // })
           console.log(this.list)
+
+          let arr = [1, 2, 3, 4, 5]
+          const step = 5
+          let level = 0
+          level = (step === 1 && 1) || (step !== 2 && 2)
+          console.log(level)
         }
       }
     })
