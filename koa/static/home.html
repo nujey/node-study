@@ -5,8 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    .drop {
+      width: 100px;
+      height: 100px;
+      background: #000;
+      position: absolute;
+      left: 500px;
+      top: 100px;
+    }
+    .target {
+      width: 250px;
+      height: 180px;
+      border: 1px solid #000;
+      margin: 30px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello!home</h1>
+  <h1 draggable="true" class="txt1" >Hello!</h1>
+  <h1 draggable="true" class="txt1" >home</h1>
+  
+  <div class="target"></div>
+
+
+  <!-- <div class="drop"></div> -->
+  <script>
+    var dragging = null
+
+    var box = document.querySelector('.drop')
+    var tleft, ttop
+    document.addEventListener('mousedown', function(e) {
+      if (e.target == box) {
+        dragging = true
+        var boxRect = box.getBoundingClientRect()
+        tleft = e.clientX - boxRect.left
+        ttop = e.clientY - boxRect.top
+      }
+    })
+
+    document.addEventListener('mouseup', function(e) {
+      dragging = false
+    })
+
+    document.addEventListener('mousemove', function(e) {
+      if (dragging) {
+        var moveX = e.clientX - tleft,
+            moveY = e.clientY - ttop
+        
+            box.style.left = moveX + 'px'
+            box.style.top = moveY + 'px'
+      }
+    })
+
+
+    // 拖放
+    var txt = document.querySelector('.txt1')
+    var target = document.querySelector('.target')
+
+    txt.ondragstart = function(e) {
+      console.log('开始拖了')
+      e.dataTransfer.setData('txt', e.target.class)
+    }
+    txt.ondrag = function() {
+      // console.log('一直脱着，别停！！！！')
+    }
+    txt.ondragend = function() {
+      console.log('脱完了')
+    }
+
+    target.ondragenter = function(e) {
+      // console.log('拖进目标元素了')
+      console.log(target.childNodes)
+      e.preventDefault()
+    }
+    target.ondragover = function(e) {
+      console.log('拖动元素在目标范围内一直拖着')
+      e.preventDefault()
+    }
+    target.ondragleave = function(e) {
+      console.log('拖动元素离开了')
+      e.preventDefault()
+    }
+
+    target.ondrop = function(e) {
+      console.log('拖着的元素被放下了，且在目标元素内部')
+      e.preventDefault()
+      var data = e.dataTransfer.getData('txt')
+      e.target.appendChild(document.getElementById(data))
+    }
+  </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 const router = require('koa-router')();
 const { dbQuery } = require("../db")
-const TABLENAME = 'sunday'
+const TABLENAME = 'node2'
 
 router.post('/oa/login', async (ctx, next) => {
   let { name, password} = ctx.request.body
@@ -27,8 +27,8 @@ router.get('/name', async (ctx, next) => {
     return false
   }
   let sql = `SELECT * FROM ${TABLENAME} WHERE id = ${ctx.request.query.id}`
+  console.log(sql)
   await dbQuery(sql).then(res => {
-    console.log(res)
     ctx.body = {
       msg: '',
       code: 200,

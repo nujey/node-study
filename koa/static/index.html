@@ -17,11 +17,11 @@
         {{item.id}}~{{item.name}}
         <span style="margin-left: 20px;" @click="handleRemove(item.id)">删除</span>
       </p>
-      <p class="test-btn" @click="handleGetList">发送请求</p>
+      <p class="test-btn" @click="handleGetList">查询</p>
       <div>
         <input type="text" v-model="name" placeholder="请输入名称">
         <input type="text" v-model="age" placeholder="请输入年龄">
-        <p class="test-btn" @click="handleAdd">增加数据</p>
+        <p class="test-btn" @click="handleAdd">增加</p>
       </div>
     </div>
   </div>
@@ -31,10 +31,13 @@
       data() {
         return {
           id: '',
-          list: [],
+          list: [1, 2, 3, 4, 5, 6],
           name: '',
           age: ''
         }
+      },
+      mounted() {
+        this.handleTest()
       },
       methods: {
         handleGetList: function() {
@@ -76,6 +79,18 @@
               that.handleGetList()
             }
           })
+        },
+        handleTest: function() {
+          // this.list.forEach(element => {
+          //   element = element === 4  ? 'a' : element
+          // })
+          console.log(this.list)
+
+          let arr = [1, 2, 3, 4, 5]
+          const step = 5
+          let level = 0
+          level = (step === 1 && 1) || (step !== 2 && 2)
+          console.log(level) 
         }
       }
     })
