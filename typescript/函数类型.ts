@@ -32,5 +32,18 @@ function bb(first: string = 'b', last: string) {
 }
 
 '剩余参数'
+'es6中的rest参数，只能作为函数的最后一个参数'
+function push(array: any[], ...items:any[]) {
+  items.forEach(item => {
+    array.push(item)
+  })
+}
 
-  
+'重载'
+'重载允许一个函数接受不同数量或者类型的参数时候，作出不同的处理'
+
+function reverse(x: number): number;
+function reverse(x: string): string;
+function reverse(x: string | number): number | string {
+  return x.split('').reverse().hoin('')
+}
