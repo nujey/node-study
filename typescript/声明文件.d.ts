@@ -15,6 +15,11 @@
 //   n: '/// <reference />三斜线指令'
 // }
 
+/// <reference types="sizzle"/>
+/// <reference path="jquery.d.ts" />
+
+import * as moment from 'moment' 
+
 declare var jQuery: (selector: string) => any
 declare let $:(selector: string) => any
 declare const $q:(selector: string) => any
@@ -53,5 +58,16 @@ interface AjaxSetting {
 declare namespace jQ {
   function ajax(url: string, setting?: AjaxSetting): void;
 }
+
+declare global {
+  interface String {
+    prependHello(): string
+  }
+}
+
+declare module 'moment' {
+  export function foo(): moment.CalendarKey
+}
+
 
 export { jQuery, jQuery1, Animal, Directions, AjaxSetting, jQ }
