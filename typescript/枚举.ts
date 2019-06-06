@@ -12,3 +12,15 @@ enum Color { Red, Green, Blue = "blue".length }
 
 desc = '如果紧接在计算所得项后面的是未手动赋值的项，那么它就会因为无法获得初始值而报错'
 enum Color1 { Red = 'red'.length, Green, Blue }
+
+desc = '常数枚举'
+
+declare const enum Directions {
+  Up,
+  Down,
+  Left,
+  Right
+}
+
+let Directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right]
+

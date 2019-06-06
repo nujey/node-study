@@ -5,3 +5,13 @@ let xcat: [string, number] = ['xcat', 25]
 xcat.push("test")
 
 xcat.push(true)
+
+/**
+ * @author shandian
+ * @version v1.0.0
+ * @param {Array} arr 数组
+ * @returns {Object} 返回对象
+ */
+function test(arr) {
+
+}
