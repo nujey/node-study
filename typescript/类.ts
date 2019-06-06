@@ -52,3 +52,14 @@ class Animal {
   }
 }
 
+// 静态方法
+// 使用static修饰符修饰的方法成为静态方法 不需要实例化 直接通过类来调用
+class Animal {
+  static isAnimal(a) {
+    return a instanceof Animal
+  }
+}
+let aa = new Animal('JACK')
+
+
+
