@@ -62,4 +62,55 @@ class Animal {
 let aa = new Animal('JACK')
 
 //
+class Animal {
+  name = 'Jack'
+
+  static num = 30
+
+  constructor() {
+
+  }
+}
+
+desc = 'public修饰的属性和方法是公有的 可以在任何地方被访问'
+desc = '修饰的属性和方法是私有的，不能在生命的类的外部访问 子类中不允许被访问'
+desc = '属性和方法是被保护的 和private类似 子类中允许被访问'
+
+class Animal {
+  public name;  // 外部可以修改
+  private age; // 不能在子类中被访问和修改
+  protected job; // 在子类中可以被访问
+  public constructor (name) {
+    this.name = name
+  }
+}
+
+desc = '抽象类'
+var s = '抽象类是不允许被实例化的 抽象类中的抽象方法必须被子类实现'
+
+abstract class Animal {
+  public name;
+  public constructor(name) {
+    this.name = name
+  }
+  public abstract sayHi()
+}
+
+class Cat extends Animal {
+  public sayHi() {
+    ...[1, 2, 3]
+  }
+}
+
+desc = '类的类型'
+class Animal {
+  name: string;
+  constructor(name: string) {
+    this.name = name
+  }
+  sayHi(): string {
+    return `My name is ${this.name}`
+  }
+}
+
 
