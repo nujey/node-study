@@ -71,8 +71,9 @@ interface Counter {
 
 function getCounter(): Counter {
 
-  let counter = <Counter>function(start: number) {}
-
+  let counter = <Counter>function(start: number) {} // 类型断言
+  // let counter = function<Counter>(start: number) {}
+  // let counter = function(start: number) {} as Counter
   counter.interval = 123
 
   counter.reset = function() {}

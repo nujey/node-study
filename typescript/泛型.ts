@@ -83,3 +83,9 @@ function createArray4<T = string>(length: number, value: T): Array<T> {
   }
   return result
 }
+
+function identity<T>(arg: T):T {
+  return arg
+}
+
+let output = identity<string>("myString")
