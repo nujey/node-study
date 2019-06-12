@@ -15,3 +15,8 @@ function getLength(something: string | number): number {
     return something.toString().length
   }
 }
+
+let someValue: any = 'this is a string'
+let strLength: number = (<string>someValue).length
+
+let len: number = (someValue as string).length
