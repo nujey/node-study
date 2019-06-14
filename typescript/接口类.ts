@@ -23,4 +23,47 @@ class Clock implements ClockConstructor {
   currentTime: Date
   constructor(h: number, m: number) {}
 }
-interface ClockCon
+'直接操作类的静态部分'
+
+interface ClockConstructor {
+  new (hour: number, minute: number): ClockInteface
+}
+
+interface ClockInteface {
+  tick(): void
+}
+
+function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInteface {
+  return new ctor(hour, minute)
+}
+
+class DigitalCLock implements ClockInteface {
+  constructor(h: number, m: number){ }
+  tick() {
+    console.log('beep beep')
+  }
+}
+
+class AnalogClock implements ClockInteface {
+  constructor(h: number, m: number) {}
+  tick() {}
+}
+
+'第一个参数是clockConstructot类型 所以会检查AnalogClock是否符合构造函数签名'
+
+let digital = createClock(DigitalCLock, 12, 17)
+let analog = createClock(AnalogClock, 7, 32)
+
+'使用类表达式的时候'
+interface ClockConstructor {
+  new (hour: number, minute: number)
+}
+interface ClockInterface {
+  tick()
+}
+const Clock: ClockConstructor = class Clock implements ClockInteface {
+  constructor(h: number, m: number) {}
+  tick() {
+    console.log('beep beep')
+  }
+}
