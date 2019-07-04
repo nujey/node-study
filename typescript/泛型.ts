@@ -30,7 +30,9 @@ desc = '泛型约束'
   interface Lengthwise {
     length: number
   }
-  function loggingIdentity<T extends Lengthwise>(arg: T): T {
+  function loggingIdentity<T>(arg: T[]): T[] {
+    
+  }<T extends Lengthwise>(arg: T): T {
     console.log(arg.length)
     return arg
   }
@@ -83,3 +85,22 @@ function createArray4<T = string>(length: number, value: T): Array<T> {
   }
   return result
 }
+
+function identity<T>(arg: T):T {
+  return arg
+}
+
+let output = identity<string>("myString")
+
+function loggingIdentity<T>(arg: T[]): T[] {
+  return arg 
+}
+
+function loggingIdentity<T>(arg: Array<T>): Array<T> {
+  return arg
+}
+
+function identity<T>(arg: T): T {
+  return arg
+}
+let myTest: <T>(arg: T) => T = identity

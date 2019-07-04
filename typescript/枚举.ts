@@ -23,4 +23,3 @@ declare const enum Directions {
 }
 
 let Directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right]
-
