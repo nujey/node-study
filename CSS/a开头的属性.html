@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* all: initial; 初始化所有属性值 */
+
+    .box {
+      width: 300px;
+      min-height: 500px;
+      border: 1px solid #f00;
+      display: flex;
+      flex-flow: row wrap;
+
+      /* all: initial; 初始化所有属性值 */
+      align-content: space-around;
+    }
+    .item {
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+      margin: 10px;
+      border: 1px solid #38adff;
+
+      align-self: flex-end;
+      /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+      animation: item 2s ;
+
+      animation-name: itemmove;
+      animation-duration: 4s;
+      animation-timing-function: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+      animation-delay: .5s;
+      animation-iteration-count: infinite; /* 动画播放的次数 */
+      animation-direction: alternate-reverse; /* reverse alternate alternate-reverse initial */
+      animation-fill-mode: both;
+      animation-play-state: paused;
+
+
+
+      appearance: icon;
+      -webkit-appearance: checkbox;
+    }
+    @keyframes itemmove {
+      0% {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+      }
+      100% {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
+    <div class="item item3">3</div>
+  </div>
+</body>
+</html>
