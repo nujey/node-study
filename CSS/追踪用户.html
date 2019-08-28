@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <a href="https://baidu.com" id="target">百度</a>
+
+  <script>
+    const theLink = document.getElementById('target')
+
+    theLink.addEventListener('click', function(event) {
+      event.preventDefault()
+      console.log(encodeURIComponent(theLink.getAttribute('href')))
+      window.location.href = '/jump?url=' + encodeURIComponent(theLink.getAttribute('href'));
+      
+      window.addEventListener('unload', function(event) {
+        navigator.sendBeacon('/log', 'foo=bar')
+      })
+    })
+
+    window.addEventListener('unload', function(event) {
+      navigator.sendBeacon('/log', 'foo=bar')
+    })
+  </script>
+</body>
+</html>
